@@ -35,7 +35,8 @@ class Plant:
 class GardenManagement:
     """A class representing the garden management."""
 
-    def __init__(self, owner: str, water_stock: int, plants: list[Plant] = None):
+    def __init__(self, owner: str, water_stock: int,
+                 plants: list[Plant] = None):
         self.owner = owner.capitalize()
         self.plants = plants if plants else []
         self.number_plants = len(self.plants)
@@ -58,7 +59,7 @@ def main():
     plants = [Plant("Tomato", 120, 60), Plant("Rose", 25, 30)]
     garden = GardenManagement("Hamid", 1, plants)
 
-    print("=== Custom Garden Errors Demo ===")
+    print("=== Custom Garden Errors Demo ===", end="\n\n")
 
     print("Testing PlantError...")
     try:
@@ -69,7 +70,7 @@ def main():
 
     print("Testing WaterError...")
     try:
-        garden.watering_garden()
+        garden.check_water_level()
 
     except WaterError as error:
         print(f"Caught WaterError: {error}\n")

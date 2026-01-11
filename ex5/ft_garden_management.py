@@ -34,7 +34,8 @@ class Plant:
         if water_level < 0:
             raise WaterError("The water level of plant cannot be negative!")
         if sunlight_hours < 0:
-            raise SunLightError("The sunlight hours of plant cannot be negative!")
+            raise SunLightError("The sunlight hours of plant cannot be "
+                                "negative!")
         self.name = name.capitalize()
         self.age = age
         self.height = height
@@ -45,7 +46,7 @@ class Plant:
 class GardenManager:
     """A class representing the garden management."""
 
-    def __init__(self, name:str , owner: str, water_stock: int):
+    def __init__(self, name: str, owner: str, water_stock: int):
         if name == "":
             raise GardenError("Garden name cannot be empty!")
         if owner == "":
@@ -77,9 +78,11 @@ class GardenManager:
         def plants_is_health(water_level, sunlight_hours):
 
             if water_level > 10:
-                raise WaterError(f"Water level {water_level} is too high (max 10)")
+                raise WaterError(f"Water level {water_level} "
+                                 f"is too high (max 10)")
             if water_level < 1:
-                raise WaterError(f"Water level {water_level} is too low (min 1)")
+                raise WaterError(f"Water level {water_level} "
+                                 "is too low (min 1)")
             if sunlight_hours > 12:
                 raise SunLightError(f"Sunlight hours {sunlight_hours} "
                                     "is too high (max 12)")
@@ -138,6 +141,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-

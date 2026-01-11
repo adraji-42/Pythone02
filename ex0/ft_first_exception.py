@@ -26,7 +26,7 @@ def main():
 
     tests = ["25", "abc", "100", "-50"]
 
-    print("=== Garden Temperature Checker ===")
+    print("=== Garden Temperature Checker ===", end="\n\n")
 
     for test in tests:
         try:

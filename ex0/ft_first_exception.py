@@ -1,0 +1,43 @@
+def check_temperature(temp_str: str):
+    """
+    Converts a string to an integer and checks if it exists inside it
+    Safe range for plants (0-40 degrees).
+    """
+
+    try:
+        temp = int(temp_str)
+
+    except ValueError:
+        raise ValueError(f"{temp_str} is not a valid number")
+
+    if temp < 0:
+        raise ValueError(f"{temp}°C is too cold for plants (min 0°C)")
+    elif temp > 40:
+        raise ValueError(f"{temp}°C is too hot for plants (max 40°C)")
+    else:
+        print(f"Temperature {temp}°C is perfect for plants!", end="\n\n")
+
+
+def main():
+    """
+    Script entry point. Runs multiple test cases for demonstration
+    Exception handling and data validation.
+    """
+
+    tests = ["25", "abc", "100", "-50"]
+
+    print("=== Garden Temperature Checker ===")
+
+    for test in tests:
+        try:
+            print(f"Testing temperature: {test}")
+            check_temperature(test)
+
+        except ValueError as e:
+            print(f"Error: {e}", end="\n\n")
+
+    print("All tests completed - program didn't crash!")
+
+
+if __name__ == "__main__":
+    main()

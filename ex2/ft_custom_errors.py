@@ -35,7 +35,7 @@ class Plant:
 class GardenManagement:
     """A class representing the garden management."""
 
-    def __init__(self, owner: str, water_stock: int, plants: list = None):
+    def __init__(self, owner: str, water_stock: int, plants: list[Plant] = None):
         self.owner = owner.capitalize()
         self.plants = plants if plants else []
         self.number_plants = len(self.plants)

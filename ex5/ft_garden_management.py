@@ -72,7 +72,7 @@ class GardenManager:
             print(f"Watering {plant.name} - success")
             self.water_stock -= 1
 
-    def check_plants_health(self):
+    def check_plant_health(self):
         """Check the health status of all plants."""
 
         def plants_is_health(water_level, sunlight_hours):
@@ -101,7 +101,7 @@ class GardenManager:
                       f"sun: {plant.sunlight_hours})")
 
 
-def main():
+def test_garden_management():
     print("=== Garden Management System ===", end="\n\n")
 
     garden = GardenManager("Konoha", "Naruto", 3)
@@ -140,4 +140,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    test_garden_management()

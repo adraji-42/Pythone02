@@ -15,10 +15,10 @@ def check_temperature(temp_str: str):
     elif temp > 40:
         raise ValueError(f"{temp}°C is too hot for plants (max 40°C)")
     else:
-        print(f"Temperature {temp}°C is perfect for plants!", end="\n\n")
+        return temp
 
 
-def main():
+def test_temperature_input():
     """
     Script entry point. Runs multiple test cases for demonstration
     Exception handling and data validation.
@@ -31,7 +31,8 @@ def main():
     for test in tests:
         try:
             print(f"Testing temperature: {test}")
-            check_temperature(test)
+            temp = check_temperature(test)
+            print(f"Temperature {temp}°C is perfect for plants!", end="\n\n")
 
         except ValueError as e:
             print(f"Error: {e}", end="\n\n")
@@ -40,4 +41,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    test_temperature_input()

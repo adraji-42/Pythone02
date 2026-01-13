@@ -18,8 +18,8 @@ class Plant:
 
     def __init__(self, name: str, height: int, age: int):
         self.name = name.capitalize()
-        if (age == 0 and height > 0) or (age > 0 and height == 0):
-            raise PlantError("Cannot have age 0 with height > 0 or vice versa")
+        if (age == 0 and height > 0):
+            raise PlantError("Cannot have age 0 with height > 0")
         if age < 0:
             raise PlantError("The age of plant cannot be negative!")
         if height < 0:

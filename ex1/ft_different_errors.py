@@ -22,7 +22,7 @@ def test_error_types():
     to match the example output exactly.
     """
 
-    print("=== Garden Error Types Demo ===")
+    print("=== Garden Error Types Demo ===", end="\n\n")
 
     # 1. ValueError
     print("Testing ValueError...")

@@ -1,14 +1,14 @@
-def water_plants(plants: list[str]):
+def water_plants(plant_list: list[str]):
 
     print("Opening watering system")
 
-    for plant in plants:
-        if not isinstance(plant, str):
+    for plant in plant_list:
+        if not isinstance(plant, str) or plant is None:
             raise ValueError("Cannot water None - invalid plant!")
         print(f"Watering {plant.lower()}")
 
 
-def main():
+def test_watering_system():
 
     normal_test = [
                 "tomato",
@@ -47,4 +47,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    test_watering_system()

@@ -17,13 +17,15 @@ class Plant:
     """A class representing a plant with protected data."""
 
     def __init__(self, name: str, height: int, age: int):
-        self.name = name.capitalize()
+        if name == "":
+            raise PlantError("The plant name cannot be empty")
         if (age == 0 and height > 0):
             raise PlantError("Cannot have age 0 with height > 0")
         if age < 0:
             raise PlantError("The age of plant cannot be negative!")
         if height < 0:
             raise PlantError("The height of plant cannot be negative!")
+        self.name = name.capitalize()
         self.age = age
         self.height = height
 
@@ -35,13 +37,17 @@ class Plant:
 class GardenManagement:
     """A class representing the garden management."""
 
-    def __init__(self, owner: str, water_stock: int,
-                 plants: list[Plant] = None):
+    def __init__(
+                self, owner: str, water_stock: int,
+                plants: list[Plant] = None
+            ):
+        if owner == "":
+            raise PlantError("The plant owner cannot be empty")
+        if water_stock < 0:
+            raise WaterError("The value of the water tank cannot be negative!")
         self.owner = owner.capitalize()
         self.plants = plants if plants else []
         self.number_plants = len(self.plants)
-        if water_stock < 0:
-            raise WaterError("The value of the water tank cannot be negative!")
         self.water_stock = water_stock
 
     def watering_garden(self):

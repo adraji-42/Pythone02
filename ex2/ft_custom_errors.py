@@ -78,10 +78,18 @@ def report_error(error: Exception):
     tb = error.__traceback__
     while tb.tb_next:
         tb = tb.tb_next
+
     line_number = tb.tb_lineno
+    full_path = tb.tb_frame.f_code.co_filename
+    file_name = full_path.split('/')[-1]
+    if file_name == full_path:
+        file_name = full_path.split('\\')[-1]
 
     print(f"Caught {error.__class__.__name__}: {error}")
-    print(f"Error in line: {line_number}", end="\n\n")
+    print(
+        f"The error occurred on line '{line_number}'"
+        f"in file '{file_name}'", end="\n\n"
+    )
 
 
 def main() -> None:

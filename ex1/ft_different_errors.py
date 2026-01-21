@@ -1,4 +1,4 @@
-def garden_operations(error_type: str = None) -> None:
+def garden_operations(error_type: str = None):
     """
     Triggers specific exceptions based on the provided error_type string.
     """

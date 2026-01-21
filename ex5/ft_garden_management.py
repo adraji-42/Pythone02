@@ -21,8 +21,10 @@ class SunLightError(GardenError):
 class Plant:
     """A class representing a plant with protected data."""
 
-    def __init__(self, name: str, height: int, age: int,
-                 water_level: int, sunlight_hours: int):
+    def __init__(
+            self, name: str, height: int, age: int,
+            water_level: int, sunlight_hours: int
+            ) -> None:
         if name == "":
             raise PlantError("Plant name cannot be empty!")
         if (age == 0 and height > 0) or (age > 0 and height == 0):
@@ -46,7 +48,7 @@ class Plant:
 class GardenManager:
     """A class representing the garden management."""
 
-    def __init__(self, name: str, owner: str, water_stock: int):
+    def __init__(self, name: str, owner: str, water_stock: int) -> None:
         if name == "":
             raise GardenError("Garden name cannot be empty!")
         if owner == "":
@@ -58,12 +60,12 @@ class GardenManager:
         self.plants = []
         self.water_stock = water_stock
 
-    def add_plant(self, plant: Plant):
+    def add_plant(self, plant: Plant) -> None:
         """Add a plant to the garden list."""
         self.plants.append(plant)
         print(f"Added {plant.name} successfully")
 
-    def water_plants(self):
+    def water_plants(self) -> None:
         """Water all plants and handle water stock errors."""
         print("Opening watering system")
         if self.water_stock < len(self.plants):
@@ -72,7 +74,7 @@ class GardenManager:
             print(f"Watering {plant.name} - success")
             self.water_stock -= 1
 
-    def check_plant_health(self):
+    def check_plant_health(self) -> None:
         """Check the health status of all plants."""
 
         def plants_is_health(water_level, sunlight_hours):
@@ -101,7 +103,7 @@ class GardenManager:
                       f"sun: {plant.sunlight_hours})")
 
 
-def test_garden_management():
+def test_garden_management() -> None:
     print("=== Garden Management System ===", end="\n\n")
 
     garden = GardenManager("Konoha", "Naruto", 3)

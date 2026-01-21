@@ -1,4 +1,4 @@
-def water_plants(plant_list: list[str]):
+def water_plants(plant_list: list[str]) -> None:
 
     print("Opening watering system")
 
@@ -8,7 +8,7 @@ def water_plants(plant_list: list[str]):
         print(f"Watering {plant.lower()}")
 
 
-def test_watering_system():
+def test_watering_system() -> None:
 
     normal_test = [
                 "tomato",

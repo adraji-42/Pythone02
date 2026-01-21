@@ -1,4 +1,4 @@
-def check_temperature(temp_str: str):
+def check_temperature(temp_str: str) -> None:
     """
     Converts a string to an integer and checks if it exists inside it
     Safe range for plants (0-40 degrees).
@@ -17,7 +17,7 @@ def check_temperature(temp_str: str):
         return temp
 
 
-def test_temperature_input():
+def test_temperature_input() -> None:
     """
     Script entry point. Runs multiple test cases for demonstration
     Exception handling and data validation.

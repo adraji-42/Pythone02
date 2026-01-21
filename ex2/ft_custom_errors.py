@@ -16,10 +16,10 @@ class WaterError(GardenError):
 class Plant:
     """A class representing a plant with protected data."""
 
-    def __init__(self, name: str, height: int, age: int):
+    def __init__(self, name: str, height: int, age: int) -> None:
         if name == "":
             raise PlantError("The plant name cannot be empty")
-        if (age == 0 and height > 0):
+        if age == 0 and height > 0:
             raise PlantError("Cannot have age 0 with height > 0")
         if age < 0:
             raise PlantError("The age of plant cannot be negative!")
@@ -29,7 +29,7 @@ class Plant:
         self.age = age
         self.height = height
 
-    def check_plant_health(self, is_wilting: bool):
+    def check_plant_health(self, is_wilting: bool) -> None:
         if is_wilting:
             raise PlantError(f"The {self.name} plant is wilting!")
 
@@ -40,9 +40,9 @@ class GardenManagement:
     def __init__(
                 self, owner: str, water_stock: int,
                 plants: list[Plant] = None
-            ):
+            ) -> None:
         if owner == "":
-            raise PlantError("The plant owner cannot be empty")
+            raise GardenError("The plant owner cannot be empty")
         if water_stock < 0:
             raise WaterError("The value of the water tank cannot be negative!")
         self.owner = owner.capitalize()
@@ -50,18 +50,18 @@ class GardenManagement:
         self.number_plants = len(self.plants)
         self.water_stock = water_stock
 
-    def watering_garden(self):
+    def watering_garden(self) -> None:
         if self.water_stock < self.number_plants:
             raise WaterError("The water tank is not sufficient "
                              "for irrigating the garden!")
         self.water_stock -= self.number_plants
 
-    def check_water_level(self):
+    def check_water_level(self) -> None:
         if self.water_stock < self.number_plants:
             raise WaterError("Not enough water in the tank!")
 
 
-def main():
+def main() -> None:
     plants = [Plant("Tomato", 120, 60), Plant("Rose", 25, 30)]
     garden = GardenManagement("Hamid", 1, plants)
 
@@ -70,27 +70,23 @@ def main():
     print("Testing PlantError...")
     try:
         plants[0].check_plant_health(True)
-
     except PlantError as error:
         print(f"Caught PlantError: {error}\n")
 
     print("Testing WaterError...")
     try:
         garden.check_water_level()
-
     except WaterError as error:
         print(f"Caught WaterError: {error}\n")
 
     print("Testing catching all garden errors...")
     try:
         plants[0].check_plant_health(True)
-
     except GardenError as error:
         print(f"Caught a garden error: {error}")
 
     try:
         garden.check_water_level()
-
     except GardenError as error:
         print(f"Caught a garden error: {error}\n")
 

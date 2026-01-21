@@ -1,4 +1,4 @@
-def garden_operations(error_type: str) -> None:
+def garden_operations(error_type: str = None) -> None:
     """
     Triggers specific exceptions based on the provided error_type string.
     """
@@ -8,7 +8,8 @@ def garden_operations(error_type: str) -> None:
     elif error_type == "zero":
         return 10 / 0
     elif error_type == "file":
-        open("missing.txt", "r")
+        file = open("missing.txt", "r")
+        file.close()
     elif error_type == "key":
         garden = {"plant": "tomato"}
         return garden["missing_plant"]
@@ -29,7 +30,7 @@ def test_error_types() -> None:
     except ValueError:
         print("Caught ValueError: invalid literal for int()", end="\n\n")
     else:
-        print("No ValueError caught", end="\n\n")
+        print("Execution successful", end="\n\n")
 
     # 2. ZeroDivisionError
     print("Testing ZeroDivisionError...")
@@ -38,7 +39,7 @@ def test_error_types() -> None:
     except ZeroDivisionError:
         print("Caught ZeroDivisionError: division by zero", end="\n\n")
     else:
-        print("No ZeroDivisionError caught", end="\n\n")
+        print("Execution successful", end="\n\n")
 
     # 3. FileNotFoundError
     print("Testing FileNotFoundError...")
@@ -48,7 +49,7 @@ def test_error_types() -> None:
         print("Caught FileNotFoundError: No such file 'missing.txt'",
               end="\n\n")
     else:
-        print("No FileNotFoundError caught", end="\n\n")
+        print("Execution successful", end="\n\n")
 
     # 4. KeyError
     print("Testing KeyError...")
@@ -57,7 +58,7 @@ def test_error_types() -> None:
     except KeyError:
         print("Caught KeyError: 'missing_plant'", end="\n\n")
     else:
-        print("No KeyError caught", end="\n\n")
+        print("Execution successful", end="\n\n")
 
     # 5. Multiple errors together
     print("Testing multiple errors together...")
@@ -66,7 +67,7 @@ def test_error_types() -> None:
     except (ValueError, ZeroDivisionError, KeyError, FileNotFoundError):
         print("Caught an error, but program continues!", end="\n\n")
     else:
-        print("No errors caught", end="\n\n")
+        print("Execution successful", end="\n\n")
 
     print("All error types tested successfully!")
 

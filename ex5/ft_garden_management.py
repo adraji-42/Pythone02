@@ -36,8 +36,9 @@ class Plant:
         if water_level < 0:
             raise WaterError("The water level of plant cannot be negative!")
         if sunlight_hours < 0:
-            raise SunLightError("The sunlight hours of plant cannot be "
-                                "negative!")
+            raise SunLightError(
+                "The sunlight hours of plant cannot be negative!"
+                )
         self.name = name.capitalize()
         self.age = age
         self.height = height
@@ -58,11 +59,13 @@ class GardenManager:
         self.name = name.capitalize()
         self.owner = owner.capitalize()
         self.plants = []
+        self.number_plants = 0
         self.water_stock = water_stock
 
     def add_plant(self, plant: Plant) -> None:
         """Add a plant to the garden list."""
         self.plants.append(plant)
+        self.number_plants += 1
         print(f"Added {plant.name} successfully")
 
     def water_plants(self) -> None:
@@ -73,6 +76,10 @@ class GardenManager:
         for plant in self.plants:
             print(f"Watering {plant.name} - success")
             self.water_stock -= 1
+
+    def check_water_tank(self) -> None:
+        if self.water_stock < self.number_plants:
+            raise WaterError("Not enough water in tank!")
 
     def check_plant_health(self) -> None:
         """Check the health status of all plants."""
@@ -127,12 +134,16 @@ def test_garden_management() -> None:
         print("Closing watering system (cleanup)", end="\n\n")
 
     print("Checking plant health...")
-    garden.check_plants_health()
-    print()
+    try:
+        garden.check_plant_health()
+    except GardenError as error:
+        print(f"Error: {error}")
+    finally:
+        print()
 
     print("Testing error recovery...")
     try:
-        garden.water_plants()
+        garden.check_water_tank()
     except GardenError as error:
         print(f"Caught GardenError: {error}")
     finally:

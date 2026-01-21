@@ -32,9 +32,8 @@ def test_temperature_input() -> None:
             print(f"Testing temperature: {test}")
             temp = check_temperature(test)
             print(f"Temperature {temp}°C is perfect for plants!", end="\n\n")
-
-        except ValueError as e:
-            print(f"Error: {e}", end="\n\n")
+        except ValueError as error:
+            print(f"Error: {error}", end="\n\n")
 
     print("All tests completed - program didn't crash!")
 

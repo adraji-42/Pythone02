@@ -47,7 +47,7 @@ class GardenManagement:
             raise WaterError("The value of the water tank cannot be negative!")
         self.owner = owner.capitalize()
         self.plants = plants if plants else []
-        self.number_plants = len(self.plants)
+        self.number_plants = self.plants.__len__()
         self.water_stock = water_stock
 
     def watering_garden(self) -> None:
@@ -56,7 +56,7 @@ class GardenManagement:
                              "for irrigating the garden!")
         self.water_stock -= self.number_plants
 
-    def check_water_level(self) -> None:
+    def check_water_tank(self) -> None:
         if self.water_stock < self.number_plants:
             raise WaterError("Not enough water in the tank!")
 
@@ -71,24 +71,32 @@ def main() -> None:
     try:
         plants[0].check_plant_health(True)
     except PlantError as error:
-        print(f"Caught PlantError: {error}\n")
+        print(f"Caught PlantError: {error}", end="\n\n")
+    else:
+        print("Execution successful", end="\n\n")
 
     print("Testing WaterError...")
     try:
-        garden.check_water_level()
+        garden.check_water_tank()
     except WaterError as error:
-        print(f"Caught WaterError: {error}\n")
+        print(f"Caught WaterError: {error}", end="\n\n")
+    else:
+        print("Execution successful", end="\n\n")
 
     print("Testing catching all garden errors...")
     try:
         plants[0].check_plant_health(True)
     except GardenError as error:
         print(f"Caught a garden error: {error}")
+    else:
+        print("Execution successful")
 
     try:
-        garden.check_water_level()
+        garden.check_water_tank()
     except GardenError as error:
-        print(f"Caught a garden error: {error}\n")
+        print(f"Caught a garden error: {error}", end="\n\n")
+    else:
+        print("Execution successful")
 
     print("All custom error types work correctly!")
 

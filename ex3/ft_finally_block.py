@@ -25,7 +25,6 @@ def test_watering_system() -> None:
     print("Testing normal watering...")
     try:
         water_plants(normal_test)
-
     except ValueError as error:
         print(f"Error: {error}\n")
 

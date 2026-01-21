@@ -31,24 +31,28 @@ class Plant:
 
     def check_plant_health(self, is_wilting: bool) -> None:
         if is_wilting:
-            raise PlantError(f"The {self.name} plant is wilting!")
+            raise PlantError(f"The {self.name.lower()} plant is wilting!")
 
 
 class GardenManagement:
     """A class representing the garden management."""
 
-    def __init__(
-                self, owner: str, water_stock: int,
-                plants: list[Plant] = None
-            ) -> None:
-        if owner == "":
-            raise GardenError("The plant owner cannot be empty")
+    def __init__(self, owner: str, water_stock: int) -> None:
+        if not owner:
+            raise GardenError("The plant owner cannot be empty or None")
         if water_stock < 0:
             raise WaterError("The value of the water tank cannot be negative!")
         self.owner = owner.capitalize()
-        self.plants = plants if plants else []
-        self.number_plants = self.plants.__len__()
+        self.plants = []
+        self.number_plants = 0
         self.water_stock = water_stock
+
+    def add_plant(self, plant: Plant) -> None:
+        if plant is None or not ft_isinstance(plant, "Plant"):
+            raise TypeError("Only Plant objects can be added to the garden")
+        else:
+            self.plants.append(plant)
+            self.number_plants += 1
 
     def watering_garden(self) -> None:
         if self.water_stock < self.number_plants:
@@ -61,9 +65,31 @@ class GardenManagement:
             raise WaterError("Not enough water in the tank!")
 
 
+def ft_isinstance(obj: object, class_name: str) -> bool:
+    """Manual simulation of isinstance."""
+    if obj is None:
+        return False
+    family_tree = [cls.__name__ for cls in obj.__class__.__mro__]
+    return class_name in family_tree
+
+
+def report_error(error: Exception):
+    """Prints a standardized error report with the deepest line number."""
+    tb = error.__traceback__
+    while tb.tb_next:
+        tb = tb.tb_next
+    line_number = tb.tb_lineno
+
+    print(f"Caught {error.__class__.__name__}: {error}")
+    print(f"Error in line: {line_number}", end="\n\n")
+
+
 def main() -> None:
     plants = [Plant("Tomato", 120, 60), Plant("Rose", 25, 30)]
-    garden = GardenManagement("Hamid", 1, plants)
+    garden = GardenManagement("Hamid", 1)
+
+    for plant in plants:
+        garden.add_plant(plant)
 
     print("=== Custom Garden Errors Demo ===", end="\n\n")
 
@@ -72,6 +98,8 @@ def main() -> None:
         plants[0].check_plant_health(True)
     except PlantError as error:
         print(f"Caught PlantError: {error}", end="\n\n")
+    except Exception as error:
+        report_error(error)
     else:
         print("Execution successful", end="\n\n")
 
@@ -80,6 +108,8 @@ def main() -> None:
         garden.check_water_tank()
     except WaterError as error:
         print(f"Caught WaterError: {error}", end="\n\n")
+    except Exception as error:
+        report_error(error)
     else:
         print("Execution successful", end="\n\n")
 
@@ -88,6 +118,8 @@ def main() -> None:
         plants[0].check_plant_health(True)
     except GardenError as error:
         print(f"Caught a garden error: {error}")
+    except Exception as error:
+        report_error(error)
     else:
         print("Execution successful")
 
@@ -95,6 +127,8 @@ def main() -> None:
         garden.check_water_tank()
     except GardenError as error:
         print(f"Caught a garden error: {error}", end="\n\n")
+    except Exception as error:
+        report_error(error)
     else:
         print("Execution successful")
 
@@ -102,4 +136,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as error:
+        report_error(error)

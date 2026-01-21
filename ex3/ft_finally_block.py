@@ -1,9 +1,16 @@
+def obj_in_class(obj: object, class_name: str) -> bool:
+    """Check if an object is an instance of a specific class by its name."""
+    if obj is None:
+        return False
+    return obj.__class__.__name__ == class_name
+
+
 def water_plants(plant_list: list[str]) -> None:
 
     print("Opening watering system")
 
     for plant in plant_list:
-        if not isinstance(plant, str) or plant is None:
+        if not obj_in_class(plant, "str") or plant is None:
             raise ValueError("Cannot water None - invalid plant!")
         print(f"Watering {plant.lower()}")
 

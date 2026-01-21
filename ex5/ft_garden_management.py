@@ -25,6 +25,8 @@ class Plant:
             self, name: str, height: int, age: int,
             water_level: int, sunlight_hours: int
             ) -> None:
+        if not obj_in_class(name, "str"):
+            raise TypeError("The name object must be str")
         if name == "":
             raise PlantError("Plant name cannot be empty!")
         if (age == 0 and height > 0) or (age > 0 and height == 0):
@@ -50,6 +52,10 @@ class GardenManager:
     """A class representing the garden management."""
 
     def __init__(self, name: str, owner: str, water_stock: int) -> None:
+        if not obj_in_class(name, "str"):
+            raise TypeError("The name object must be str")
+        if not obj_in_class(owner, "str"):
+            raise TypeError("The owner object must be str")
         if name == "":
             raise GardenError("Garden name cannot be empty!")
         if owner == "":
@@ -64,6 +70,8 @@ class GardenManager:
 
     def add_plant(self, plant: Plant) -> None:
         """Add a plant to the garden list."""
+        if not obj_in_class(plant, "Plant"):
+            raise TypeError("The plant object must be Plant")
         self.plants.append(plant)
         self.number_plants += 1
         print(f"Added {plant.name} successfully")
@@ -84,7 +92,7 @@ class GardenManager:
     def check_plant_health(self) -> None:
         """Check the health status of all plants."""
 
-        def plants_is_health(water_level, sunlight_hours):
+        def plants_is_health(water_level: int, sunlight_hours: int) -> None:
 
             if water_level > 10:
                 raise WaterError(f"Water level {water_level} "
@@ -103,11 +111,18 @@ class GardenManager:
             try:
                 plants_is_health(plant.water_level, plant.sunlight_hours)
             except GardenError as error:
-                print(f"Error checking {plant.name}: {error}")
+                raise PlantError(f"Error checking {plant.name}: {error}")
             else:
                 print(f"{plant.name.lower()}: healthy "
                       f"(water: {plant.water_level}, "
                       f"sun: {plant.sunlight_hours})")
+
+
+def obj_in_class(obj: object, class_name: str) -> bool:
+    """Check if an object is an instance of a specific class by its name."""
+    if obj is None:
+        return False
+    return obj.__class__.__name__ == class_name
 
 
 def test_garden_management() -> None:
@@ -121,14 +136,14 @@ def test_garden_management() -> None:
         garden.add_plant(Plant("Blue Spider Lily", 25, 45, 9, 15))
         garden.add_plant(Plant("", 15, 25, 5, 7))
     except GardenError as error:
-        print(f"Error adding plant: {error}")
-    finally:
-        print()
+        print(f"Error adding plant: {error}", end="\n\n")
+    except Exception as error:
+        print(f"Error: {error}", end="\n\n")
 
     print("Watering plants...")
     try:
         garden.water_plants()
-    except GardenError as error:
+    except Exception as error:
         print(f"Error: {error}")
     finally:
         print("Closing watering system (cleanup)", end="\n\n")
@@ -136,16 +151,18 @@ def test_garden_management() -> None:
     print("Checking plant health...")
     try:
         garden.check_plant_health()
-    except GardenError as error:
-        print(f"Error: {error}")
-    finally:
-        print()
+    except PlantError as error:
+        print(error, end="\n\n")
+    except Exception as error:
+        print(f"Error: {error}", end="\n\n")
 
     print("Testing error recovery...")
     try:
         garden.check_water_tank()
     except GardenError as error:
         print(f"Caught GardenError: {error}")
+    except Exception as error:
+        print(f"Error: {error}")
     finally:
         print("System recovered and continuing...", end="\n\n")
 

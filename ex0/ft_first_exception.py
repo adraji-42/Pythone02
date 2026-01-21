@@ -1,18 +1,31 @@
 def check_temperature(temp_str: str) -> None:
     """
-    Converts a string to an integer and checks if it exists inside it
-    Safe range for plants (0-40 degrees).
+    Convert a string input to an integer and validate the temperature range.
+
+    Args:
+        temp_str (str): The temperature value as a string.
+
+    Returns:
+        int: The validated temperature if it falls within the safe range.
+
+    Raises:
+        ValueError: If input is not a numeric string or outside (0-40) range.
     """
+
     try:
         try:
             temp: int = int(temp_str)
         except ValueError:
-            raise ValueError(f"{temp_str} is not a valid number")
+            raise ValueError(f"Invalid input: '{temp_str}' is not a number.")
 
         if temp < 0:
-            raise ValueError(f"{temp}°C is too cold for plants (min 0°C)")
+            raise ValueError(
+                f"Low temperature alert: {temp}°C is below 0°C (min 0°C)"
+                )
         elif temp > 40:
-            raise ValueError(f"{temp}°C is too hot for plants (max 40°C)")
+            raise ValueError(
+                f"High temperature alert: {temp}°C exceeds 40°C (max 40°C)"
+                )
     except Exception as error:
         raise error
     else:
@@ -20,10 +33,7 @@ def check_temperature(temp_str: str) -> None:
 
 
 def test_temperature_input() -> None:
-    """
-    Script entry point. Runs multiple test cases for demonstration
-    Exception handling and data validation.
-    """
+    """Test temperature validation with various inputs."""
 
     tests: list[str] = ["25", "abc", "100", "-50"]
 
@@ -35,9 +45,9 @@ def test_temperature_input() -> None:
             temp = check_temperature(test)
             print(f"Temperature {temp}°C is perfect for plants!", end="\n\n")
         except ValueError as error:
-            print(f"Error: {error}", end="\n\n")
+            print(f"Validation Error: {error}", end="\n\n")
         except Exception as error:
-            print(f"Error: {error}", end="\n\n")
+            print(f"Unexpected Error: {error}", end="\n\n")
 
     print("All tests completed - program didn't crash!")
 

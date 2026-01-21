@@ -1,24 +1,33 @@
-def garden_operations(error_type: str = None):
+def garden_operations(error_type: str = None) -> None:
     """
-    Triggers specific exceptions based on the provided error_type string.
+    Simulate and trigger specific Python exceptions for testing purposes.
+
+    Args:
+        error_type (str, optional): The identifier for the exception to raise.
+            Supported values:
+            - 'value': Raises ValueError (invalid string to int).
+            - 'zero': Raises ZeroDivisionError (division by zero).
+            - 'file': Raises FileNotFoundError (missing text file).
+            - 'key': Raises KeyError (missing dictionary key).
+            If None or an unrecognized string is provided, no exception is
+            raised and the function completes normally.
     """
 
     if error_type == "value":
         int("abc")
     elif error_type == "zero":
-        return 10 / 0
+        print(10 / 0)
     elif error_type == "file":
         file = open("missing.txt", "r")
         file.close()
     elif error_type == "key":
         garden = {"plant": "tomato"}
-        return garden["missing_plant"]
+        print(garden["missing_plant"])
 
 
 def test_error_types() -> None:
     """
-    Tests and catches specific error types with hardcoded messages
-    to match the example output exactly.
+    Test and catch garden_operations exceptions with concise logging.
     """
 
     print("=== Garden Error Types Demo ===", end="\n\n")
@@ -28,7 +37,10 @@ def test_error_types() -> None:
     try:
         garden_operations("value")
     except ValueError:
-        print("Caught ValueError: invalid literal for int()", end="\n\n")
+        print(
+            "ERROR: Failed to convert string to integer. "
+            "Ensure the input contains only numeric digits.", end="\n\n"
+        )
     else:
         print("Execution successful", end="\n\n")
 
@@ -37,7 +49,10 @@ def test_error_types() -> None:
     try:
         garden_operations("zero")
     except ZeroDivisionError:
-        print("Caught ZeroDivisionError: division by zero", end="\n\n")
+        print(
+            "ERROR: Mathematical operation failed. "
+            "Division by zero is undefined in this system.", end="\n\n"
+        )
     else:
         print("Execution successful", end="\n\n")
 
@@ -45,9 +60,11 @@ def test_error_types() -> None:
     print("Testing FileNotFoundError...")
     try:
         garden_operations("file")
-    except FileNotFoundError:
-        print("Caught FileNotFoundError: No such file 'missing.txt'",
-              end="\n\n")
+    except FileNotFoundError as error:
+        print(
+            "ERROR: Resource missing. "
+            f"Could not find file: '{error.filename}'", end="\n\n"
+        )
     else:
         print("Execution successful", end="\n\n")
 
@@ -55,8 +72,10 @@ def test_error_types() -> None:
     print("Testing KeyError...")
     try:
         garden_operations("key")
-    except KeyError:
-        print("Caught KeyError: 'missing_plant'", end="\n\n")
+    except KeyError as error:
+        print(
+            f"ERROR: Database lookup failed. Missing key: {error}", end="\n\n"
+        )
     else:
         print("Execution successful", end="\n\n")
 
@@ -65,7 +84,10 @@ def test_error_types() -> None:
     try:
         garden_operations("file")
     except (ValueError, ZeroDivisionError, KeyError, FileNotFoundError):
-        print("Caught an error, but program continues!", end="\n\n")
+        print(
+            "GENERAL ERROR: An operation failed during execution. "
+            "The system handled the exception and will proceed.", end="\n\n"
+        )
     else:
         print("Execution successful", end="\n\n")
 

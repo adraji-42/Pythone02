@@ -30,14 +30,16 @@ def check_plant_health(
         TypeError: If plant_name is not a string.
         ValueError: If environmental parameters are outside safe ranges.
     """
-    if not obj_in_class(plant_name, "str"):
+    if not obj_in_class(plant_name, str.__name__):
         raise TypeError(
             f"Type mismatch: 'plant_name' expected 'str' but "
             f"received '{plant_name.__class__.__name__}'."
         )
 
-    if plant_name == "":
-        raise ValueError("Invalid Input: Plant name cannot be empty.")
+    if not plant_name.strip():
+        raise ValueError(
+            f"Invalid Input '{plant_name}': Plant name cannot be empty."
+                        )
 
     if water_level > 10:
         raise ValueError(

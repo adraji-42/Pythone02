@@ -16,8 +16,6 @@ def check_temperature(temp_str: str) -> None:
         temp: int = int(temp_str)
     except ValueError:
         raise ValueError(f"Invalid input: '{temp_str}' is not a number.")
-    except Exception as error:
-        raise error
 
     if temp < 0:
         raise ValueError(

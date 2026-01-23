@@ -38,9 +38,10 @@ class Plant:
         if not obj_in_class(name, str.__name__):
             raise TypeError(f"Type Error: 'name' must be a string, not "
                             f"'{name.__class__.__name__}'.")
-        if name == "":
-            raise PlantError("Identification Error: Plant name cannot be "
-                             "empty.")
+        if not plant_name.strip():
+            raise ValueError(
+                f"Invalid Input '{plant_name}': Plant name cannot be empty."
+            )
         if (age == 0 and height > 0) or (age > 0 and height == 0):
             raise PlantError(f"Biological Mismatch: Inconsistent age ({age}) "
                              f"and height ({height}) relationship.")

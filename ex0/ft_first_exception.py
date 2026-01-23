@@ -13,21 +13,20 @@ def check_temperature(temp_str: str) -> None:
     """
 
     try:
-        try:
-            temp: int = int(temp_str)
-        except ValueError:
-            raise ValueError(f"Invalid input: '{temp_str}' is not a number.")
-
-        if temp < 0:
-            raise ValueError(
-                f"Low temperature alert: {temp}°C is below 0°C (min 0°C)"
-                )
-        elif temp > 40:
-            raise ValueError(
-                f"High temperature alert: {temp}°C exceeds 40°C (max 40°C)"
-                )
+        temp: int = int(temp_str)
+    except ValueError:
+        raise ValueError(f"Invalid input: '{temp_str}' is not a number.")
     except Exception as error:
         raise error
+
+    if temp < 0:
+        raise ValueError(
+            f"Low temperature alert: {temp}°C is below 0°C (min 0°C)"
+            )
+    elif temp > 40:
+        raise ValueError(
+            f"High temperature alert: {temp}°C exceeds 40°C (max 40°C)"
+            )
     else:
         return temp
 

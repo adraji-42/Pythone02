@@ -65,6 +65,18 @@ def test_error_types() -> None:
             "ERROR: Resource missing. "
             f"Could not find file: '{error.filename}'", end="\n\n"
         )
+    except PermissionError as error:
+        print(
+            "ERROR: Permission denied. "
+            f"Inadequate permissions for: '{error.filename}'", end="\n\n"
+        )
+    except IsADirectoryError as error:
+        print(
+            "ERROR: Type mismatch. "
+            f"'{error.filename}' is a folder, "
+            "but a file with that name was expected.",
+            end="\n\n"
+        )
     else:
         print("Execution successful", end="\n\n")
 
@@ -87,6 +99,18 @@ def test_error_types() -> None:
         print(
             "GENERAL ERROR: An operation failed during execution. "
             "The system handled the exception and will proceed.", end="\n\n"
+        )
+    except PermissionError as error:
+        print(
+            "ERROR: Permission denied. "
+            f"Inadequate permissions for: '{error.filename}'", end="\n\n"
+        )
+    except IsADirectoryError as error:
+        print(
+            "ERROR: Type mismatch. "
+            f"'{error.filename}' is a folder, "
+            "but a file with that name was expected.",
+            end="\n\n"
         )
     else:
         print("Execution successful", end="\n\n")

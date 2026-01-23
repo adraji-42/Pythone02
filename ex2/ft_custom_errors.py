@@ -25,9 +25,18 @@ class Plant:
 
     def __init__(self, name: str, height: int, age: int) -> None:
         """Initialize plant attributes and validate biological constraints."""
-        if name == "":
-            raise PlantError("Validation Failed: Plant identity is missing. "
-                             "Name cannot be an empty string.")
+        if name.__class__.__name__ != str.__name__:
+            raise TypeError(
+                f"Type mismatch: 'plant_name' expected 'str' but "
+                f"received '{plant_name.__class__.__name__}'."
+            )
+        if not plant_name.strip():
+            raise ValueError(
+                )
+            raise PlantError(
+                "Validation Failed: Plant identity is missing. "
+                f"Invalid Input '{plant_name}': Plant name cannot be empty."
+            )
         if age == 0 and height > 0:
             raise PlantError("Biological Inconsistency: A newborn plant "
                              "(age 0) cannot have a positive height.")

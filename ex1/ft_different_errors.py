@@ -1,4 +1,4 @@
-def garden_operations(error_type: str = None) -> None:
+def garden_operations(error_type: str = "value") -> None:
     """
     Simulate and trigger specific Python exceptions for testing purposes.
 
@@ -41,6 +41,8 @@ def test_error_types() -> None:
             "ERROR: Failed to convert string to integer. "
             "Ensure the input contains only numeric digits.", end="\n\n"
         )
+    except Exception as error:
+        print(f"Unexpected Error: {error}")
     else:
         print("Execution successful", end="\n\n")
 
@@ -53,6 +55,8 @@ def test_error_types() -> None:
             "ERROR: Mathematical operation failed. "
             "Division by zero is undefined in this system.", end="\n\n"
         )
+    except Exception as error:
+        print(f"Unexpected Error: {error}")
     else:
         print("Execution successful", end="\n\n")
 
@@ -65,18 +69,8 @@ def test_error_types() -> None:
             "ERROR: Resource missing. "
             f"Could not find file: '{error.filename}'", end="\n\n"
         )
-    except PermissionError as error:
-        print(
-            "ERROR: Permission denied. "
-            f"Inadequate permissions for: '{error.filename}'", end="\n\n"
-        )
-    except IsADirectoryError as error:
-        print(
-            "ERROR: Type mismatch. "
-            f"'{error.filename}' is a folder, "
-            "but a file with that name was expected.",
-            end="\n\n"
-        )
+    except Exception as error:
+        print(f"Unexpected Error: {error}")
     else:
         print("Execution successful", end="\n\n")
 
@@ -88,6 +82,8 @@ def test_error_types() -> None:
         print(
             f"ERROR: Database lookup failed. Missing key: {error}", end="\n\n"
         )
+    except Exception as error:
+        print(f"Unexpected Error: {error}")
     else:
         print("Execution successful", end="\n\n")
 
@@ -100,18 +96,8 @@ def test_error_types() -> None:
             "GENERAL ERROR: An operation failed during execution. "
             "The system handled the exception and will proceed.", end="\n\n"
         )
-    except PermissionError as error:
-        print(
-            "ERROR: Permission denied. "
-            f"Inadequate permissions for: '{error.filename}'", end="\n\n"
-        )
-    except IsADirectoryError as error:
-        print(
-            "ERROR: Type mismatch. "
-            f"'{error.filename}' is a folder, "
-            "but a file with that name was expected.",
-            end="\n\n"
-        )
+    except Exception as error:
+        print(f"Unexpected Error: {error}")
     else:
         print("Execution successful", end="\n\n")
 

@@ -63,6 +63,8 @@ def test_watering_system() -> None:
         water_plants(normal_test)
     except ValueError as error:
         print(f"Operational Alert: {error}\n")
+    except Exception as error:
+        print(f"Unexpected Error: {error}")
     else:
         success = True
     finally:
@@ -77,6 +79,8 @@ def test_watering_system() -> None:
         water_plants(error_test)
     except ValueError as error:
         print(f"Operational Alert: {error}")
+    except Exception as error:
+        print(f"Unexpected Error: {error}")
     else:
         success = True
     finally:

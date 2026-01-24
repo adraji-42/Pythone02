@@ -1,16 +1,28 @@
 class GardenError(Exception):
     """Base class for all garden-related errors."""
-    pass
+    def __init__(
+        self,
+        messege: str = "An error of the following type occurred: GardenError"
+    ):
+        super().__init__(messege)
 
 
 class PlantError(GardenError):
     """Raised when there is an issue with a plant."""
-    pass
+    def __init__(
+        self,
+        messege: str = "An error of the following type occurred: PlantError"
+    ):
+        super().__init__(messege)
 
 
 class WaterError(GardenError):
     """Raised when there is a watering or irrigation issue."""
-    pass
+    def __init__(
+        self,
+        messege: str = "An error of the following type occurred: WaterError"
+    ):
+        super().__init__(messege)
 
 
 class Plant:
@@ -25,18 +37,9 @@ class Plant:
 
     def __init__(self, name: str, height: int, age: int) -> None:
         """Initialize plant attributes and validate biological constraints."""
-        if name.__class__.__name__ != str.__name__:
-            raise TypeError(
-                f"Type mismatch: 'plant_name' expected 'str' but "
-                f"received '{plant_name.__class__.__name__}'."
-            )
-        if not plant_name.strip():
-            raise ValueError(
-                )
-            raise PlantError(
-                "Validation Failed: Plant identity is missing. "
-                f"Invalid Input '{plant_name}': Plant name cannot be empty."
-            )
+        if name == "":
+            raise PlantError("Validation Failed: Plant identity is missing. "
+                             "Name cannot be an empty string.")
         if age == 0 and height > 0:
             raise PlantError("Biological Inconsistency: A newborn plant "
                              "(age 0) cannot have a positive height.")
@@ -75,13 +78,13 @@ class GardenManagement:
             raise WaterError(f"Tank Error: {water_stock} units is invalid. "
                              "Water levels cannot be negative.")
         self.owner = owner.capitalize()
-        self.plants = []
+        self.plants: list[Plant] = []
         self.number_plants = 0
         self.water_stock = water_stock
 
     def add_plant(self, plant: Plant) -> None:
         """Add a new Plant instance to the garden collection."""
-        if plant is None or not ft_isinstance(plant, "Plant"):
+        if plant is None or not ft_isinstance(plant, Plant.__name__):
             raise TypeError("System Error: Addition failed. Only valid Plant "
                             "objects are permitted.")
         else:
@@ -121,10 +124,15 @@ def ft_isinstance(obj: object, class_name: str) -> bool:
     return class_name in family_tree
 
 
-def report_error(error: Exception):
+def report_error(error: Exception) -> None:
     """Print a standardized diagnostic report for any caught exception."""
 
     tb = error.__traceback__
+
+    print(f"DIAGNOSTIC - {error.__class__.__name__}: {error}")
+
+    if not tb:
+        return
     while tb.tb_next:
         tb = tb.tb_next
 
@@ -134,7 +142,6 @@ def report_error(error: Exception):
     if file_name == full_path:
         file_name = full_path.split('\\')[-1]
 
-    print(f"DIAGNOSTIC - {error.__class__.__name__}: {error}")
     print(
         f"LOCATION - Line: {line_number} | File: {file_name}", end="\n\n"
     )

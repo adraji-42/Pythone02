@@ -1,21 +1,37 @@
 class GardenError(Exception):
     """Base class for all garden-related errors."""
-    pass
+    def __init__(
+        self,
+        messege: str = "An error of the following type occurred: GardenError"
+    ):
+        super().__init__(messege)
 
 
 class PlantError(GardenError):
     """Raised when there is an issue with a plant."""
-    pass
+    def __init__(
+        self,
+        messege: str = "An error of the following type occurred: PlantError"
+    ):
+        super().__init__(messege)
 
 
 class WaterError(GardenError):
     """Raised when there is a watering or irrigation issue."""
-    pass
+    def __init__(
+        self,
+        messege: str = "An error of the following type occurred: WaterError"
+    ):
+        super().__init__(messege)
 
 
 class SunLightError(GardenError):
     """Raised when there is a sunlight exposure issue."""
-    pass
+    def __init__(
+        self,
+        messege: str = "An error of the following type occurred: SunLightError"
+    ):
+        super().__init__(messege)
 
 
 class Plant:
@@ -35,13 +51,12 @@ class Plant:
             water_level: int, sunlight_hours: int
     ) -> None:
         """Initialize plant and validate biological and environmental data."""
-        if not obj_in_class(name, str.__name__):
+        if not obj_in_class(name, "str"):
             raise TypeError(f"Type Error: 'name' must be a string, not "
                             f"'{name.__class__.__name__}'.")
-        if not plant_name.strip():
-            raise ValueError(
-                f"Invalid Input '{plant_name}': Plant name cannot be empty."
-            )
+        if name == "":
+            raise PlantError("Identification Error: Plant name cannot be "
+                             "empty.")
         if (age == 0 and height > 0) or (age > 0 and height == 0):
             raise PlantError(f"Biological Mismatch: Inconsistent age ({age}) "
                              f"and height ({height}) relationship.")
@@ -75,9 +90,9 @@ class GardenManager:
 
     def __init__(self, name: str, owner: str, water_stock: int) -> None:
         """Initialize garden management with resource validation."""
-        if not obj_in_class(name, str.__name__):
+        if not obj_in_class(name, "str"):
             raise TypeError("Type Error: Garden 'name' must be a string.")
-        if not obj_in_class(owner, str.__name__):
+        if not obj_in_class(owner, "str"):
             raise TypeError("Type Error: Garden 'owner' must be a string.")
         if name == "":
             raise GardenError("Registry Error: Garden name cannot be empty.")
@@ -88,41 +103,27 @@ class GardenManager:
                              f"negative ({water_stock}).")
         self.name = name.capitalize()
         self.owner = owner.capitalize()
-        self._plants = []
+        self.plants: list[Plant] = []
         self.number_plants = 0
         self.water_stock = water_stock
 
     def add_plant(self, plant: Plant) -> None:
         """Add a validated Plant object to the garden collection."""
-        if not obj_in_class(plant, Plant.__name__):
+        if not obj_in_class(plant, "Plant"):
             raise TypeError(f"Type Error: Expected 'Plant' object, got "
                             f"'{plant.__class__.__name__}'.")
-        self._plants.append(plant)
+        self.plants.append(plant)
         self.number_plants += 1
         print(f"Success: {plant.name} added to {self.name}.")
-
-    def rm_plant(self, plant: Plant) -> None:
-        """Remove a Plant object from the garden."""
-        if not obj_in_class(plant, Plant.__name__):
-            raise TypeError("Input must be a Plant object.")
-        if plant not in self._plants:
-            raise GardenError(f"{plant.name} not in {self.name}.")
-        self._plants.remove(plant)
-        self.number_plants -= 1
-        print(f"Success: {plant.name} removed.")
-
-    def get_plants(self) -> list[Plant]:
-        """Access Plant list"""
-        return self._plants
 
     def water_plants(self) -> None:
         """Execute irrigation for all plants if resources permit."""
         print("Opening watering system...")
-        if self.water_stock < len(self._plants):
+        if self.water_stock < len(self.plants):
             raise WaterError(f"Resource Scarcity: Tank level "
                              f"({self.water_stock}) is below required "
-                             f"amount ({len(self._plants)}).")
-        for plant in self._plants:
+                             f"amount ({len(self.plants)}).")
+        for plant in self.plants:
             print(f"Irrigating {plant.name} - OK")
             self.water_stock -= 1
 
@@ -150,7 +151,7 @@ class GardenManager:
                 raise SunLightError(f"Light Deficiency: {sunlight_hours}h "
                                     "is below metabolic limit (min 2h).")
 
-        for plant in self._plants:
+        for plant in self.plants:
             try:
                 plants_is_health(plant.water_level, plant.sunlight_hours)
             except GardenError as error:

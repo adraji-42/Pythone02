@@ -3,7 +3,7 @@ class GardenError(Exception):
     def __init__(
         self,
         messege: str = "An error of the following type occurred: GardenError"
-    ):
+    ) -> None:
         super().__init__(messege)
 
 
@@ -12,7 +12,7 @@ class PlantError(GardenError):
     def __init__(
         self,
         messege: str = "An error of the following type occurred: PlantError"
-    ):
+    ) -> None:
         super().__init__(messege)
 
 
@@ -21,7 +21,7 @@ class WaterError(GardenError):
     def __init__(
         self,
         messege: str = "An error of the following type occurred: WaterError"
-    ):
+    ) -> None:
         super().__init__(messege)
 
 

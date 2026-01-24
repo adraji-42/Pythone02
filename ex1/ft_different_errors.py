@@ -1,4 +1,4 @@
-def garden_operations(error_type: str = "value") -> None:
+def garden_operations(error_type: str = "") -> None:
     """
     Simulate and trigger specific Python exceptions for testing purposes.
 
